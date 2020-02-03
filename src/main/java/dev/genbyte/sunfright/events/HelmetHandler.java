@@ -14,8 +14,8 @@ public class HelmetHandler implements Listener {
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		PlayerInventory inv = event.getPlayer().getInventory();
 
-		ItemStack stack = new ItemStack(Material.IRON_HELMET);
-		stack.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 2);
+		ItemStack stack = new ItemStack(Material.LEATHER_HELMET);
+		stack.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
 		stack.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 2);
 
 		inv.setHelmet(stack);

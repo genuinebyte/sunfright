@@ -1,7 +1,10 @@
 package dev.genbyte.sunfright;
 
 import java.util.Collection;
+import java.util.logging.Level;
 
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -19,10 +22,8 @@ public class Damager extends BukkitRunnable {
 		Collection<? extends Player> players = sf.getServer().getOnlinePlayers();
 		players.forEach((player) -> {
 			byte skylight = player.getLocation().getBlock().getLightFromSky();
-			if (skylight > 3 && skylight < 13) {
+			if (skylight > 3) {
 				new DoDamage(player, (byte) 1).runTask(sf);
-			} else if (skylight >= 13) {
-				new DoDamage(player, (byte) 2).runTask(sf);
 			}
 		});
 	}
@@ -44,9 +45,26 @@ public class Damager extends BukkitRunnable {
 
 				if (helmetMeta instanceof Damageable) {
 					Damageable helmetDamageable = (Damageable) helmetMeta;
+					int helmetDamage = helmetDamageable.getDamage();
 
-					helmetDamageable.setDamage(helmetDamageable.getDamage() + damage);
-					helmet.setItemMeta((ItemMeta) helmetDamageable);
+					if (helmetDamage + damage >= helmet.getType().getMaxDurability()) {
+						if (helmet.getEnchantmentLevel(Enchantment.VANISHING_CURSE) == 2) {
+							int bindLevel = helmet.getEnchantmentLevel(Enchantment.BINDING_CURSE);
+
+							if (bindLevel < 5) {
+								helmetDamageable.setDamage(0);
+								helmet.setItemMeta((ItemMeta) helmetDamageable);
+								helmet.addUnsafeEnchantment(Enchantment.BINDING_CURSE, bindLevel + 1);
+
+								return;
+							}
+						}
+
+						player.getInventory().setHelmet(new ItemStack(Material.AIR));
+					} else {
+						helmetDamageable.setDamage(helmetDamage + damage);
+						helmet.setItemMeta((ItemMeta) helmetDamageable);
+					}
 				}
 			} else {
 				player.damage(damage);

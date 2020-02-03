@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Damager extends BukkitRunnable {
@@ -37,9 +38,16 @@ public class Damager extends BukkitRunnable {
 
 		public void run() {
 			ItemStack helmet = player.getInventory().getHelmet();
-			if (helmet != null && helmet instanceof Damageable) {
-				Damageable damageable = (Damageable) helmet;
-				damageable.setDamage(damageable.getDamage() - damage);
+
+			if (helmet != null) {
+				ItemMeta helmetMeta = helmet.getItemMeta();
+
+				if (helmetMeta instanceof Damageable) {
+					Damageable helmetDamageable = (Damageable) helmetMeta;
+
+					helmetDamageable.setDamage(helmetDamageable.getDamage() + damage);
+					helmet.setItemMeta((ItemMeta) helmetDamageable);
+				}
 			} else {
 				player.damage(damage);
 			}

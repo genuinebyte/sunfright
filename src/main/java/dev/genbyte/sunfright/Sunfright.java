@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import dev.genbyte.sunfright.events.HelmetHandler;
+
 public class Sunfright extends JavaPlugin {
     private Logger logger;
     private BukkitTask damager;
@@ -20,6 +22,8 @@ public class Sunfright extends JavaPlugin {
         int time = 20;
         damager = new Damager(this).runTaskTimerAsynchronously(this, time, time);
         logger.log(Level.INFO, "Damager task started. and will run every " + (time / 20) + " seconds");
+
+        this.getServer().getPluginManager().registerEvents(new HelmetHandler(), this);
     }
 
     @Override

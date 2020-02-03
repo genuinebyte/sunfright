@@ -1,0 +1,9 @@
+# VSCode things
+.vscode
+.settings
+
+# Maven things
+target/
+
+# Genuinebyte things
+cptotest.sh

@@ -1,0 +1,69 @@
+<!-- based on https://github.com/sgrayme/SpigotPlugin/blob/master/pom.xml -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>dev.genbyte.sunfright</groupId>
+  <artifactId>sunfright</artifactId>
+  <packaging>jar</packaging>
+  <version>0.1.0</version>
+
+  <name>sunfright</name>
+  <description>Burn me to a cript, large glowing orb!</description>
+  <url>https://genbyte.dev</url><!-- TODO: add URL -->
+
+  <developers>
+    <developer>
+      <name>Genuinebyte</name>
+      <url>https://genbyte.dev</url>
+    </developer>
+  </developers>
+
+  <properties>
+    <author>Genuinebyte</author>
+    <mainClass>dev.genbyte.sunfright.Sunfright</mainClass>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <repositories>
+    <!-- Spigot Maven repository -->
+    <repository>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!--Spigot API -->
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.15.1-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <defaultGoal>clean install</defaultGoal>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>plugin.yml</include>
+        </includes>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>plugin.yml</exclude>
+        </excludes>
+      </resource>
+    </resources>
+  </build>
+</project>

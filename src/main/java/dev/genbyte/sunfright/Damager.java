@@ -20,10 +20,14 @@ public class Damager extends BukkitRunnable {
 
 	public void run() {
 		Collection<? extends Player> players = sf.getServer().getOnlinePlayers();
+
 		players.forEach((player) -> {
 			byte skylight = player.getLocation().getBlock().getLightFromSky();
+
 			if (skylight > 3) {
 				new DoDamage(player, (byte) 1).runTask(sf);
+			} else if (player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.VANISHING_CURSE) == 2) {
+				player.getInventory().setHelmet(new ItemStack(Material.AIR));
 			}
 		});
 	}
@@ -67,7 +71,7 @@ public class Damager extends BukkitRunnable {
 					}
 				}
 			} else {
-				player.damage(damage);
+				player.damage(damage * 2);
 			}
 		}
 	}

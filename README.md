@@ -32,5 +32,5 @@ from the [Minecraft wiki][mcwiki-helmets], is listed below.
 - Fire Protection to act like unbreaking
 - Respawn helmet disappears when no longer exposed to sunlight.
 - Allow custom death messages when players burnt by the sun
-- Configure damage taken by sun
+- ~~Configure damage taken by sun~~ Done!
 - Option to adjust by difficulty

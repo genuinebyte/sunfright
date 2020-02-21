@@ -2,24 +2,28 @@ package dev.genbyte.sunfright.events;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public class HelmetHandler implements Listener {
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		PlayerInventory inv = event.getPlayer().getInventory();
+		setRespawnHelmet(event.getPlayer());
+	}
 
-		ItemStack stack = new ItemStack(Material.LEATHER_HELMET);
-		stack.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
-		stack.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 2);
-		stack.addEnchantment(Enchantment.PROTECTION_FIRE, 1);
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
 
-		inv.setHelmet(stack);
+		if (!player.hasPlayedBefore()) {
+			setRespawnHelmet(player);
+		}
 	}
 
 	@EventHandler
@@ -30,5 +34,16 @@ public class HelmetHandler implements Listener {
 			event.setCancelled(true);
 			event.getView().setItem(event.getRawSlot(), new ItemStack(Material.AIR));
 		}
+	}
+
+	private void setRespawnHelmet(Player player) {
+		PlayerInventory inv = player.getInventory();
+
+		ItemStack stack = new ItemStack(Material.LEATHER_HELMET);
+		stack.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
+		stack.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 2);
+		stack.addEnchantment(Enchantment.PROTECTION_FIRE, 1);
+
+		inv.setHelmet(stack);
 	}
 }

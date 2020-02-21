@@ -17,6 +17,7 @@ public class HelmetHandler implements Listener {
 		ItemStack stack = new ItemStack(Material.LEATHER_HELMET);
 		stack.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
 		stack.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 2);
+		stack.addEnchantment(Enchantment.PROTECTION_FIRE, 1);
 
 		inv.setHelmet(stack);
 	}

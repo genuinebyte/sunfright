@@ -51,6 +51,11 @@ public class Damager extends BukkitRunnable {
 					Damageable helmetDamageable = (Damageable) helmetMeta;
 					int helmetDamage = helmetDamageable.getDamage();
 
+					if (helmet.getEnchantmentLevel(Enchantment.PROTECTION_FIRE) < 1) {
+						applyDamage();
+						return;
+					}
+
 					if (helmetDamage + damage >= helmet.getType().getMaxDurability()) {
 						if (helmet.getEnchantmentLevel(Enchantment.VANISHING_CURSE) == 2) {
 							int bindLevel = helmet.getEnchantmentLevel(Enchantment.BINDING_CURSE);
@@ -71,8 +76,12 @@ public class Damager extends BukkitRunnable {
 					}
 				}
 			} else {
-				player.damage(damage * 2);
+				applyDamage();
 			}
+		}
+
+		private void applyDamage() {
+			player.damage(damage * 2);
 		}
 	}
 }

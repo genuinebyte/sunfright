@@ -4,11 +4,11 @@ your ability to be in sunlight.
 
 [404]: https://www.minecraftforum.net/forums/minecraft-java-edition/seeds/298932-ironman-challenge-series-404
 
-Every time you spawn, you're given a leather helmet with Curse of Binding and
-Curse of Vanishing. This gives you some time to gather supplies before you can
-shield yourself from the sunlight. If you try to take it off, it will vanish.
-This leather helmet gives you around 5 minutes to gather everything you need to
-live a good life underground, or return home.
+Every time you spawn, you're given a leather helmet with Curse of Binding,
+Curse of Vanishing, and Fire Protection. This gives you some time to gather
+supplies before you can shield yourself from the sunlight, but if you try to
+take it off, it'll vanish. This leather helmet gives you around 5 minutes to
+gather everything you need to live a good life underground, or return home.
 
 Normal helmets give you resistance to the sunlight too. Every second you are
 exposed to skylight greater than 3, your helmet takes one damage, or if you
@@ -29,8 +29,9 @@ from the [Minecraft wiki][mcwiki-helmets], is listed below.
 ### TODO:
 
 - Black Stained Glass to shield the sun
-- Fire Protection to act like unbreaking
-- Respawn helmet disappears when no longer exposed to sunlight.
+- Higher levels of Fire Protection give more resistance to the sun (like
+  unbreaking on the helmet).
+- ~~Respawn helmet disappears when no longer exposed to sunlight.~~ DONE!
 - Allow custom death messages when players burnt by the sun
-- ~~Configure damage taken by sun~~ Done!
+- ~~Configure damage taken by sun~~ DONE!
 - Option to adjust by difficulty

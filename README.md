@@ -1,4 +1,8 @@
 # Sunfright
+[todo.sr.ht][tickets]
+
+[tickets]: https://todo.sr.ht/~genbyte/sunfright
+
 Inspired by the [404 challenge][404], this is a Spigot plugin that restricts
 your ability to be in sunlight.
 
@@ -26,12 +30,8 @@ from the [Minecraft wiki][mcwiki-helmets], is listed below.
 
 [mcwiki-helmets]: https://minecraft.gamepedia.com/Helmet#Durability
 
-### TODO:
-
-- Black Stained Glass to shield the sun
-- Higher levels of Fire Protection give more resistance to the sun (like
-  unbreaking on the helmet).
-- ~~Respawn helmet disappears when no longer exposed to sunlight.~~ DONE!
-- Allow custom death messages when players burnt by the sun
-- ~~Configure damage taken by sun~~ DONE!
-- Option to adjust by difficulty
+### Notes
+- Black glass can shield you from the sun if it is directly above you.
+- Respawn helmets disappear when you are safe.
+- You must have at least Fire Protection I on a helmet to stay safe from
+  sunlight above level 3.

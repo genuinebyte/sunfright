@@ -4,4 +4,5 @@ description: ${description}
 author: ${author}
 website: ${url}
 
+api-version: 1.13
 main: ${mainClass}

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -43,6 +44,13 @@ public class Damager extends BukkitRunnable {
 
 		public void run() {
 			ItemStack helmet = player.getInventory().getHelmet();
+			Block topBlock = player.getWorld().getBlockAt(
+					player.getWorld().getHighestBlockAt(player.getLocation()).getLocation().subtract(0, 1, 0));
+
+			if (topBlock.getLocation().getY() > player.getLocation().getY()
+					&& topBlock.getType().equals(Material.BLACK_STAINED_GLASS)) {
+				return;
+			}
 
 			if (helmet != null) {
 				ItemMeta helmetMeta = helmet.getItemMeta();

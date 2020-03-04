@@ -27,7 +27,8 @@ public class Damager extends BukkitRunnable {
 
 			if (skylight > 3) {
 				new DoDamage(player, (byte) 1).runTask(sf);
-			} else if (player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.VANISHING_CURSE) == 2) {
+			} else if (player.getInventory().getHelmet() != null
+					&& player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.VANISHING_CURSE) == 2) {
 				player.getInventory().setHelmet(new ItemStack(Material.AIR));
 			}
 		});

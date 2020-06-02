@@ -6,4 +6,4 @@
 target/
 
 # Genuinebyte things
-cptotest.sh
+*.sh

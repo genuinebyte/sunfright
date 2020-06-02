@@ -39,9 +39,10 @@ this time of day.
 
 | Weather Condition | Time Start/End | Clock Start/End |
 | ----------------- | -------------- | --------------- |
-| Clear             | 13026 - 22973  | ![](docs/clear_start_safe.png) ![](docs/clear_end_safe.png) |
-| Raining           | 12733 - 23266  | ![](docs/stormy_start_safe.png) ![](docs/stormy_end_safe.png) |
-| Thunder Storm     | 12299 - 23699  | ![](docs/thunder_start_safe.png) ![](docs/thunder_end_safe.png) |
+| Clear             | 13026 - 22973  | ![](docs/clear_safe.png) |
+| Raining           | 12733 - 23266  | ![](docs/stormy_safe.png) |
+| Thunder Storm     | 12299 - 23699  | ![](docs/thunder_safe.png) |
+
 
 ### Notes
 - Respawn helmets disappear when you are safe.

@@ -11,7 +11,15 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import dev.genbyte.sunfright.Sunfright;
+
 public class HelmetHandler implements Listener {
+	private final Sunfright sf;
+
+	public HelmetHandler(Sunfright sf) {
+		this.sf = sf;
+	}
+
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		setRespawnHelmet(event.getPlayer());
@@ -37,6 +45,10 @@ public class HelmetHandler implements Listener {
 	}
 
 	private void setRespawnHelmet(Player player) {
+		if (!player.getWorld().equals(sf.sunnedWorld)) {
+			return;
+		}
+
 		PlayerInventory inv = player.getInventory();
 
 		ItemStack stack = new ItemStack(Material.LEATHER_HELMET);

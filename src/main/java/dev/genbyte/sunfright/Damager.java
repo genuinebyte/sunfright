@@ -1,10 +1,9 @@
 package dev.genbyte.sunfright;
 
 import java.util.Collection;
-import java.util.logging.Level;
 
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,13 +19,14 @@ public class Damager extends BukkitRunnable {
 	}
 
 	public void run() {
-		Collection<? extends Player> players = sf.getServer().getOnlinePlayers();
+		World sunnedWorld = sf.sunnedWorld;
+		Collection<? extends Player> players = sunnedWorld.getPlayers();
 
 		players.forEach((player) -> {
 			byte skylight = player.getLocation().getBlock().getLightFromSky();
 
-			if (skylight > 3) {
-				new DoDamage(player, (byte) 1).runTask(sf);
+			if (skylight > 3 && timeShouldDamage()) {
+				new DoDamage(player, sf.damagaPerSecond).runTask(sf);
 			} else if (player.getInventory().getHelmet() != null
 					&& player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.VANISHING_CURSE) == 2) {
 				player.getInventory().setHelmet(new ItemStack(Material.AIR));
@@ -34,24 +34,43 @@ public class Damager extends BukkitRunnable {
 		});
 	}
 
+	private boolean timeShouldDamage() {
+		World sunnedWorld = sf.sunnedWorld;
+
+		long time = sunnedWorld.getTime();
+		boolean storming = sunnedWorld.hasStorm();
+		boolean thundering = sunnedWorld.isThundering();
+
+		// Times are pulled from Minecraft Gamepedia page on Light, specifically the internal light
+		// level section. https://minecraft.gamepedia.com/Light
+		// Times correspond to when the light level is over 8.
+		if (!storming && !thundering) {
+			if (time >= 13027 && time <= 22973) {
+				return false;
+			}
+		} else if (storming && !thundering) {
+			if (time >= 12734 && time <= 23266) {
+				return false;
+			}
+		} else if (storming && thundering) {
+			if (time >= 12300 && time <= 23700) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	private class DoDamage extends BukkitRunnable {
 		private final Player player;
-		private final byte damage;
+		private final int damage;
 
-		public DoDamage(Player player, byte damage) {
+		public DoDamage(Player player, int damage) {
 			this.player = player;
 			this.damage = damage;
 		}
 
 		public void run() {
 			ItemStack helmet = player.getInventory().getHelmet();
-			Block topBlock = player.getWorld().getBlockAt(
-					player.getWorld().getHighestBlockAt(player.getLocation()).getLocation().subtract(0, 1, 0));
-
-			if (topBlock.getLocation().getY() > player.getLocation().getY()
-					&& topBlock.getType().equals(Material.BLACK_STAINED_GLASS)) {
-				return;
-			}
 
 			if (helmet != null) {
 				ItemMeta helmetMeta = helmet.getItemMeta();
@@ -80,7 +99,7 @@ public class Damager extends BukkitRunnable {
 
 						player.getInventory().setHelmet(new ItemStack(Material.AIR));
 					} else {
-						helmetDamageable.setDamage(helmetDamage + damage);
+						helmetDamageable.setDamage(helmetDamage + (damage/2));
 						helmet.setItemMeta((ItemMeta) helmetDamageable);
 					}
 				}
@@ -90,7 +109,7 @@ public class Damager extends BukkitRunnable {
 		}
 
 		private void applyDamage() {
-			player.damage(damage * 2);
+			player.damage(damage);
 		}
 	}
 }

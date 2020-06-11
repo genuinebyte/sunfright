@@ -40,15 +40,11 @@ public class Damager extends BukkitRunnable {
 		long time = sunnedWorld.getTime();
 		boolean storming = sunnedWorld.hasStorm();
 		boolean thundering = sunnedWorld.isThundering();
-
+		
 		// Times are pulled from Minecraft Gamepedia page on Light, specifically the internal light
 		// level section. https://minecraft.gamepedia.com/Light
 		// Times correspond to when the light level is over 8.
-		if (!storming && !thundering) {
-			if (time >= 13027 && time <= 22973) {
-				return false;
-			}
-		} else if (storming && !thundering) {
+		 if (storming && !thundering) {
 			if (time >= 12734 && time <= 23266) {
 				return false;
 			}
@@ -56,6 +52,8 @@ public class Damager extends BukkitRunnable {
 			if (time >= 12300 && time <= 23700) {
 				return false;
 			}
+		} else if (time >= 13027 && time <= 22973) {
+			return false;
 		}
 		return true;
 	}

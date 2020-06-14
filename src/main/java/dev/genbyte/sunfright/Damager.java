@@ -4,14 +4,18 @@ import java.util.Collection;
 import java.util.Random;
 import java.util.logging.Level;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.RayTraceResult;
+import org.bukkit.util.Vector;
 
 public class Damager extends BukkitRunnable {
 	private final Sunfright sf;
@@ -72,6 +76,19 @@ public class Damager extends BukkitRunnable {
 		}
 
 		public void run() {
+			Location loc = player.getLocation();
+			World world = loc.getWorld();
+			Block topBlock = player.getWorld().rayTraceBlocks(
+				loc,
+				new Vector(0, 1, 0),
+				world.getMaxHeight()-loc.getY()
+			).getHitBlock();
+	
+			if (topBlock.getLocation().getY() > player.getLocation().getY()
+					&& topBlock.getType().equals(Material.BLACK_STAINED_GLASS)) {
+				return;
+			}
+
 			ItemStack helmet = player.getInventory().getHelmet();
 
 			if (helmet != null) {

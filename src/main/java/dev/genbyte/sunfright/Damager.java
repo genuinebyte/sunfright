@@ -78,15 +78,19 @@ public class Damager extends BukkitRunnable {
 		public void run() {
 			Location loc = player.getLocation();
 			World world = loc.getWorld();
-			Block topBlock = player.getWorld().rayTraceBlocks(
+			RayTraceResult rtr = player.getWorld().rayTraceBlocks(
 				loc,
 				new Vector(0, 1, 0),
 				world.getMaxHeight()-loc.getY()
-			).getHitBlock();
+			);
 	
-			if (topBlock.getLocation().getY() > player.getLocation().getY()
-					&& topBlock.getType().equals(Material.BLACK_STAINED_GLASS)) {
-				return;
+			if (rtr != null) {
+				Block topBlock = rtr.getHitBlock();
+				if (topBlock != null && topBlock.getLocation().getY() > player.getLocation().getY()
+					&& topBlock.getType().equals(Material.BLACK_STAINED_GLASS)
+				) {
+					return;
+				}
 			}
 
 			ItemStack helmet = player.getInventory().getHelmet();

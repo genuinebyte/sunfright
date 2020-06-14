@@ -43,6 +43,13 @@ this time of day.
 | Raining           | 12733 - 23266  | ![](docs/stormy_safe.png) |
 | Thunder Storm     | 12299 - 23699  | ![](docs/thunder_safe.png) |
 
+In addition to these conditions, your helmet may not take damage if you have
+Unbreaking or a level of Fire Protection higher than 1. There is a
+`(60 + (40 ÷ (Unbreaking level + Fire Protection level) ) )%` chance that your
+helmet will take damage. Which means if you have Fire Protection I and
+Unbreaking III, there is a 30% chance your helmet won't take damage. With
+Fire Protection IV and Unbreaking III, there is a 35% chance your helmet won't
+take damage.
 
 ### Notes
 - Respawn helmets disappear when you are safe.

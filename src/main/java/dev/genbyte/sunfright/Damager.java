@@ -1,6 +1,8 @@
 package dev.genbyte.sunfright;
 
 import java.util.Collection;
+import java.util.Random;
+import java.util.logging.Level;
 
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -13,9 +15,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Damager extends BukkitRunnable {
 	private final Sunfright sf;
+	private final Random rand;
 
 	public Damager(Sunfright sf) {
 		this.sf = sf;
+		this.rand = new Random();
 	}
 
 	public void run() {
@@ -76,9 +80,11 @@ public class Damager extends BukkitRunnable {
 				if (helmetMeta instanceof Damageable) {
 					Damageable helmetDamageable = (Damageable) helmetMeta;
 					int helmetDamage = helmetDamageable.getDamage();
+					int fireProtLevel = helmet.getEnchantmentLevel(Enchantment.PROTECTION_FIRE);
+					int unbrLevel = helmet.getEnchantmentLevel(Enchantment.DURABILITY);
 
-					if (helmet.getEnchantmentLevel(Enchantment.PROTECTION_FIRE) < 1) {
-						applyDamage();
+					if (fireProtLevel < 1) {
+						damagePlayer();
 						return;
 					}
 
@@ -97,16 +103,23 @@ public class Damager extends BukkitRunnable {
 
 						player.getInventory().setHelmet(new ItemStack(Material.AIR));
 					} else {
-						helmetDamageable.setDamage(helmetDamage + (damage/2));
-						helmet.setItemMeta((ItemMeta) helmetDamageable);
+						// Formula from https://minecraft.gamepedia.com/Unbreaking
+						// Origintal is 60 + (40 / (level+1)) but we subtract one from fireProtLevel
+						// so the +1 cancels
+						int chanceToDamage = 60 + (40 / (fireProtLevel+unbrLevel));
+						
+						if (rand.nextInt(99)+1 <= chanceToDamage) {
+							helmetDamageable.setDamage(helmetDamage + (damage/2));
+							helmet.setItemMeta((ItemMeta) helmetDamageable);
+						}
 					}
 				}
 			} else {
-				applyDamage();
+				damagePlayer();
 			}
 		}
 
-		private void applyDamage() {
+		private void damagePlayer() {
 			player.damage(damage);
 		}
 	}

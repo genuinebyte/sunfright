@@ -34,8 +34,8 @@ to break on the default damage value. Data is pulled from the
 [mcwiki-helmets]: https://minecraft.gamepedia.com/Helmet#Durability
 
 ## Damage Conditions
-You will be damaged if you are in skylight greater than 3 and it is not during
-this time of day.
+You will be damaged if you are in direct sunlight and not under a solid block
+(or black stained glass) and the time falls in any of these ranges:
 
 | Weather Condition | Time Start/End | Clock Start/End |
 | ----------------- | -------------- | --------------- |
@@ -44,12 +44,10 @@ this time of day.
 | Thunder Storm     | 12299 - 23699  | ![](docs/thunder_safe.png) |
 
 In addition to these conditions, your helmet may not take damage if you have
-Unbreaking or a level of Fire Protection higher than 1. There is a
-`(60 + (40 ÷ (Unbreaking level + Fire Protection level) ) )%` chance that your
-helmet will take damage. Which means if you have Fire Protection I and
-Unbreaking III, there is a 30% chance your helmet won't take damage. With
-Fire Protection IV and Unbreaking III, there is a 35% chance your helmet won't
-take damage.
+a Fire Protection level higher than I. If you do, then the extra Fire Protection
+levels act as Unbreaking. So if you have Fire Protection IV, then it is
+equivalent to Unbreaking III and the sun has a 30% chance to not damage your
+helmet. Fire Protection III has a 27% chance to not damage, and II a 20%.
 
 ### Notes
 - Respawn helmets disappear when you are safe.

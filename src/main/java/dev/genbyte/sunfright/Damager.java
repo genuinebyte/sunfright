@@ -2,7 +2,6 @@ package dev.genbyte.sunfright;
 
 import java.util.Collection;
 import java.util.Random;
-import java.util.logging.Level;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,8 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.RayTraceResult;
-import org.bukkit.util.Vector;
 
 public class Damager extends BukkitRunnable {
 	private final Sunfright sf;
@@ -27,18 +24,40 @@ public class Damager extends BukkitRunnable {
 	}
 
 	public void run() {
+		if (!timeShouldDamage()) {
+			return;
+		}
+
 		World sunnedWorld = sf.sunnedWorld;
 		Collection<? extends Player> players = sunnedWorld.getPlayers();
 
 		players.forEach((player) -> {
-			byte skylight = player.getLocation().getBlock().getLightFromSky();
+			Location loc = player.getLocation();
+			int x = loc.getBlockX();
+			int y = loc.getBlockY();
+			int z = loc.getBlockZ();
+			// Returns one lower than it should?
+			int highestY = sunnedWorld.getHighestBlockAt(loc).getLocation().getBlockY()+1;
 
-			if (skylight > 3 && timeShouldDamage()) {
-				new DoDamage(player, sf.damagaPerSecond).runTask(sf);
-			} else if (player.getInventory().getHelmet() != null
-					&& player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.VANISHING_CURSE) == 2) {
-				player.getInventory().setHelmet(new ItemStack(Material.AIR));
+			for (int i = y; i < highestY; ++i) {
+				Block current = sunnedWorld.getBlockAt(x, i, z);
+
+				if (!blockShouldDamage(current.getType())) {
+					/* player rulled to be safe. Remove their helmet if it's the one we gave, but
+					   only do so if the skylight is less than three. This will keep us from
+					   removing the starter helmet if they're just chopping down a tree */
+					if (player.getInventory().getHelmet() != null &&
+					    player.getLocation().getBlock().getLightFromSky() > 3 &&
+					    player.getInventory().getHelmet().getEnchantmentLevel(Enchantment.VANISHING_CURSE) == 2)
+				   	{
+					   player.getInventory().setHelmet(new ItemStack(Material.AIR));
+				   	}
+
+					return;
+				}
 			}
+
+			new DoDamage(player, sf.damagaPerSecond).runTask(sf);
 		});
 	}
 
@@ -66,6 +85,23 @@ public class Damager extends BukkitRunnable {
 		return true;
 	}
 
+	/*
+	Material.isTransparent() is buggy and awful and only gives true for some things. This function
+	checks if a material lets light pass and should damage the player.
+	I've never seen it give a false positive, only a false negative, so it is one of the first
+	things we check.
+	*/
+	@SuppressWarnings("deprecation")
+	private boolean blockShouldDamage(Material mat) {
+		String key = mat.getKey().getKey().toLowerCase();
+		
+		if (mat == Material.BLACK_STAINED_GLASS) {
+			return false;
+		}
+
+		return mat.isTransparent() || key.indexOf("glass") != -1 || key.indexOf("leaves") != -1 || key.indexOf("sign") != -1 || key.indexOf("trapdoor") != -1 || key.indexOf("fence") != -1 || key.indexOf("bed") != -1 || mat == Material.ICE || mat == Material.HOPPER || mat == Material.COBWEB;
+	}
+
 	private class DoDamage extends BukkitRunnable {
 		private final Player player;
 		private final int damage;
@@ -76,23 +112,6 @@ public class Damager extends BukkitRunnable {
 		}
 
 		public void run() {
-			Location loc = player.getLocation();
-			World world = loc.getWorld();
-			RayTraceResult rtr = player.getWorld().rayTraceBlocks(
-				loc,
-				new Vector(0, 1, 0),
-				world.getMaxHeight()-loc.getY()
-			);
-	
-			if (rtr != null) {
-				Block topBlock = rtr.getHitBlock();
-				if (topBlock != null && topBlock.getLocation().getY() > player.getLocation().getY()
-					&& topBlock.getType().equals(Material.BLACK_STAINED_GLASS)
-				) {
-					return;
-				}
-			}
-
 			ItemStack helmet = player.getInventory().getHelmet();
 
 			if (helmet != null) {
@@ -102,7 +121,6 @@ public class Damager extends BukkitRunnable {
 					Damageable helmetDamageable = (Damageable) helmetMeta;
 					int helmetDamage = helmetDamageable.getDamage();
 					int fireProtLevel = helmet.getEnchantmentLevel(Enchantment.PROTECTION_FIRE);
-					int unbrLevel = helmet.getEnchantmentLevel(Enchantment.DURABILITY);
 
 					if (fireProtLevel < 1) {
 						damagePlayer();
@@ -127,7 +145,7 @@ public class Damager extends BukkitRunnable {
 						// Formula from https://minecraft.gamepedia.com/Unbreaking
 						// Origintal is 60 + (40 / (level+1)) but we subtract one from fireProtLevel
 						// so the +1 cancels
-						int chanceToDamage = 60 + (40 / (fireProtLevel+unbrLevel));
+						int chanceToDamage = 60 + (40 / (fireProtLevel));
 						
 						if (rand.nextInt(99)+1 <= chanceToDamage) {
 							helmetDamageable.setDamage(helmetDamage + (damage/2));

@@ -1,8 +1,4 @@
 # Sunfright
-[todo.sr.ht][tickets]
-
-[tickets]: https://todo.sr.ht/~genbyte/sunfright
-
 Inspired by the [404 challenge][404], this is a Spigot plugin that restricts
 your ability to be in sunlight.
 

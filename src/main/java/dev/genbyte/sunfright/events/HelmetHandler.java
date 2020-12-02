@@ -45,7 +45,7 @@ public class HelmetHandler implements Listener {
 	}
 
 	private void setRespawnHelmet(Player player) {
-		if (!player.getWorld().equals(sf.sunnedWorld)) {
+		if (!sf.respawnHelmetEnabled || !player.getWorld().equals(sf.sunnedWorld)) {
 			return;
 		}
 

@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>dev.genbyte.sunfright</groupId>
-  <artifactId>sunfright</artifactId>
+  <artifactId>Sunfright</artifactId>
   <packaging>jar</packaging>
-  <version>0.7.0</version>
+  <version>1.0.0</version>
 
-  <name>sunfright</name>
+  <name>Sunfright</name>
   <description>Burn me to a crisp, large glowing orb!</description>
   <url>https://genbyte.dev</url><!-- TODO: add URL -->
 

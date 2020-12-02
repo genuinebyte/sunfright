@@ -29,6 +29,32 @@ to break on the default damage value. Data is pulled from the
 
 [mcwiki-helmets]: https://minecraft.gamepedia.com/Helmet#Durability
 
+## Configuration
+Currently there are only three configuration options, but more will be made
+available as the plugin evolves. If you think something should be configurable,
+please [open an issue][issue-tracker]!
+
+[issue-tracker]: https://github.com/genuinebyte/sunfright/issues
+
+##### `world`
+Default: `world`
+
+This is the game world you would like the plugin to operate in.
+
+##### `damagePerSecond`
+Default: `2`
+
+The amount of damage you want the player to take from the sun. If they're
+wearing a helmet with Fire Protection, it will take half of this damage rounded
+up to the nearest whole number. One damage is equal to 1 half-heart.
+
+##### `enableRespawnHelmet`
+Default: `true`
+
+Whether or not you get a helmet that protects you from the sun on respawn. It's
+setup in such a way that the helmet can only last 5 minutes in the sun and will
+disappear the instant you're safe from the sun.
+
 ## Damage Conditions
 You will be damaged if you are in direct sunlight and not under a solid block
 (or black stained glass) and the time falls in any of these ranges:
@@ -44,8 +70,3 @@ a Fire Protection level higher than I. If you do, then the extra Fire Protection
 levels act as Unbreaking. So if you have Fire Protection IV, then it is
 equivalent to Unbreaking III and the sun has a 30% chance to not damage your
 helmet. Fire Protection III has a 27% chance to not damage, and II a 20%.
-
-### Notes
-- Respawn helmets disappear when you are safe.
-- You must have at least Fire Protection I on a helmet to stay safe from
-  sunlight above level 3.

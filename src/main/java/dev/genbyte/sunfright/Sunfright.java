@@ -11,6 +11,7 @@ import dev.genbyte.sunfright.events.HelmetHandler;
 public class Sunfright extends JavaPlugin {
     public World sunnedWorld;
     public int damagaPerSecond;
+    public boolean respawnHelmetEnabled;
     private BukkitTask damager;
 
     @Override
@@ -46,6 +47,12 @@ public class Sunfright extends JavaPlugin {
 
         if (damagaPerSecond == 0) {
             getLogger().log(Level.WARNING, "damagePerSecond is 0. Was this intended?");
+        }
+
+        if (getConfig().isSet("enableRespawnHelmet")) {
+            respawnHelmetEnabled = getConfig().getBoolean("enableRespawnHelmet");
+        } else {
+            getLogger().log(Level.WARNING, "enableRespawnHelmet was not set! Defaulting to true!");
         }
 
         return true;

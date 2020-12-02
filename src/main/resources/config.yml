@@ -1,2 +1,3 @@
 world: world
 damagePerSecond: 2
+enableRespawnHelmet: true

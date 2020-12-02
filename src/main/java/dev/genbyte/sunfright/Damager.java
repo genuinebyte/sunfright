@@ -148,7 +148,8 @@ public class Damager extends BukkitRunnable {
 						int chanceToDamage = 60 + (40 / (fireProtLevel));
 						
 						if (rand.nextInt(99)+1 <= chanceToDamage) {
-							helmetDamageable.setDamage(helmetDamage + (damage/2));
+							int calculatedDamage = (int) Math.ceil(damage / 2);
+							helmetDamageable.setDamage(helmetDamage + calculatedDamage);
 							helmet.setItemMeta((ItemMeta) helmetDamageable);
 						}
 					}

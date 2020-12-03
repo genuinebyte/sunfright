@@ -34,7 +34,7 @@ You can get the latest build from [**Curseforge**][curseforge] or on the
 [**GitHub releases page**][github-releases].
 
 [curseforge]: https://www.curseforge.com/minecraft/bukkit-plugins/sunfright
-[github-releases]: ./releases
+[github-releases]: https://github.com/genuinebyte/sunfright/releases
 
 ## Configuration
 Currently there are only three configuration options, but more will be made

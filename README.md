@@ -30,7 +30,7 @@ to break on the default damage value. Data is pulled from the
 [mcwiki-helmets]: https://minecraft.gamepedia.com/Helmet#Durability
 
 ## Download
-You can get the latest build from [**Curseforge**][curseforge], [**SpigotMC**[spigot], or on the
+You can get the latest build from [**Curseforge**][curseforge], [**SpigotMC**][spigot], or on the
 [**GitHub releases page**][github-releases].
 
 [curseforge]: https://www.curseforge.com/minecraft/bukkit-plugins/sunfright

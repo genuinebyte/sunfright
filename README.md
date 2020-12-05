@@ -43,19 +43,19 @@ please [open an issue][issue-tracker]!
 
 [issue-tracker]: https://github.com/genuinebyte/sunfright/issues
 
-##### `world`
+**world**  
 Default: `world`
 
 This is the game world you would like the plugin to operate in.
 
-##### `damagePerSecond`
+**damagePerSecond**  
 Default: `2`
 
 The amount of damage you want the player to take from the sun. If they're
 wearing a helmet with Fire Protection, it will take half of this damage rounded
 up to the nearest whole number. One damage is equal to 1 half-heart.
 
-##### `enableRespawnHelmet`
+**enableRespawnHelmet**  
 Default: `true`
 
 Whether or not you get a helmet that protects you from the sun on respawn. It's
